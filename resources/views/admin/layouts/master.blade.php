@@ -146,7 +146,7 @@
                                 <img src="{{ asset('static/AdminLTE') }}/dist/img/user2-160x160.jpg" class="user-image"
                                      alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">Alexander Pierce</span>
+                                <span class="hidden-xs">{{ auth()->user()->name }}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
@@ -181,7 +181,14 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="javascript:;"
+                                           onclick="document.getElementById('logout-form').submit();"
+                                           class="btn btn-default btn-flat">注销</a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                              style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+
                                     </div>
                                 </li>
                             </ul>
@@ -197,7 +204,7 @@
 @show
 
 @section('main-sidebar')
-     <!-- Left side column. contains the logo and sidebar -->
+    <!-- Left side column. contains the logo and sidebar -->
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
@@ -206,7 +213,7 @@
                     <li class="header">主菜单</li>
                     <li class="active"><a href="{{ url('admin') }}"><i class="fa fa-dashboard"></i> <span>仪表盘</span></a>
                     </li>
-                    <li><a href="#"><i class="glyphicon glyphicon-tags"></i> <span>商品分类</span></a></li>
+                    <li><a href="{{ url('admin/category') }}"><i class="glyphicon glyphicon-tags"></i> <span>商品分类</span></a></li>
                     <li><a href="#"><i class="glyphicon glyphicon-barcode"></i> <span>商品管理</span></a></li>
                 </ul>
                 <!-- /.sidebar-menu -->
