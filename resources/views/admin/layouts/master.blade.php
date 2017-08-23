@@ -15,6 +15,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('static/AdminLTE/dist/css/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ asset('static/AdminLTE/dist/css/skins/skin-blue.min.css') }}">
+    <!-- leaf.css -->
+    <link href="{{ asset('static/leaf/css/leaf.css') }}" rel="stylesheet"/>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -213,8 +215,9 @@
                     <li class="header">主菜单</li>
                     <li class="active"><a href="{{ url('admin') }}"><i class="fa fa-dashboard"></i> <span>仪表盘</span></a>
                     </li>
-                    <li><a href="{{ url('admin/category') }}"><i class="glyphicon glyphicon-tags"></i> <span>商品分类</span></a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-barcode"></i> <span>商品管理</span></a></li>
+                    <li><a href="{{ url('admin/category') }}"><i class="glyphicon glyphicon-tags"></i> <span>商品分类</span></a>
+                    </li>
+                    <li><a href="{{ url('admin/product') }}"><i class="glyphicon glyphicon-barcode"></i> <span>商品管理</span></a></li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -347,6 +350,9 @@
 <script src="{{ asset('static/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('static/AdminLTE/dist/js/app.min.js') }}"></script>
+<!-- leaf.js -->
+<script src="{{ asset('static/leaf/dialog.js') }}"></script>
+<script src="{{ asset('static/leaf/leaf.js') }}"></script>
 
 @yield('js')
 

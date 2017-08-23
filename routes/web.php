@@ -37,6 +37,9 @@ Route::group(['middleware' => 'auth'], function () {
     //删除分类
     Route::post('/admin/category/delete', 'Admin\\CategoryController@delete')->where(['id' => '[0-9]+']);
 
+    //商品管理
+    Route::resource('admin/product','Admin\\ProductController');
+
 });
 
 

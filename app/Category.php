@@ -12,7 +12,7 @@ class Category extends Model
     const STATUS_YES = 1;//启用状态
     const STATUS_NO = 2;//禁用状态
 
-    protected $fillable = ['name', 'sort', 'status', 'parent_id']; //置顶可填充的值
+    protected $fillable = ['name', 'sort', 'status', 'parent_id']; //设置允许填充的值
 
     public function statusAlias($returnAll = false)
     {
@@ -69,6 +69,22 @@ class Category extends Model
             return false;
         }
         return true;
+
+    }
+
+    /*
+     * 返回当前分类的父级名称
+     * @return string
+     */
+    public function getParentName()
+    {
+        if ($this->parent_id == 0) {
+            return '[顶级]';
+        }
+
+        $parent = self::find($this->parent_id);
+
+        return $parent->name;
 
     }
 

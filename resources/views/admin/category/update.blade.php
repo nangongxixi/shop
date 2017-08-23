@@ -4,7 +4,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                添加分类
+                修改分类
                 <small>填写分类信息</small>
             </h1>
             <ol class="breadcrumb">
@@ -26,23 +26,24 @@
                     {{ csrf_field() }}
 
                     <div class="box-body">
+
                         <div class="form-group">
                             <label>父级</label>
-                            <select class="form-control" name="parent_id">
-                                <option value="0">[ 顶级 ]</option>
-                                @foreach($categories as $item)
-                                    <option value="{{ $item->id }}">{{ $item->getFullName() }}</option>
-                                @endforeach
-                            </select>
+                            <span>{{ $category->getParentName() }}</span>
+                            <p class="help-block"></p>
                         </div>
-                        <div class="form-group">
+
+                        <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             <label for="exampleInputEmail1">名称</label>
-                            <input type="text" name="name" class="form-control" id="" placeholder="">
+                            <input type="text" name="name" class="form-control"
+                                   value="{{ old('name', $category->name) }}" id=""
+                                   placeholder="">
                             <p class="help-block">请输入分类名称</p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group {{ $errors->has('sort') ? 'has-error' : '' }}">
                             <label for="exampleInputPassword1">排序</label>
                             <input type="text" name="sort" class="form-control" id=""
+                                   value="{{ old('sort', $category->sort) }}"
                                    placeholder="Password">
                             <p class="help-block">请输入整数，越小越靠前</p>
                         </div>
@@ -69,7 +70,8 @@
                                     <div class="radio-inline">
                                         <label>
                                             <input type="radio" name="status" id=""
-                                                   value="{{ $key }}">
+                                                   value="{{ $key }}"
+                                                   @if( old('status', $category->status)  == $key) checked @endif>
                                             {{ $item }}
                                         </label>
                                     </div>

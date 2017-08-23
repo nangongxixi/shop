@@ -4,13 +4,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                添加分类
-                <small>填写分类信息</small>
+                添加商品
+                <small>填写商品信息</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="{{ url('admin') }}"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li class="active"><a href="{{ url('admin/category') }}">分类管理</a></li>
-                <li class="active">新增分类</li>
+                <li class="active"><a href="{{ url('admin/product') }}">商品管理</a></li>
+                <li class="active">新增商品</li>
             </ol>
         </section>
 
@@ -21,51 +21,37 @@
 
             <div class="box box-primary">
                 <!-- form start -->
-                <form role="form" action="" method="post">
+                <form role="form" action="{{ url('admin/product') }}" method="post">
 
                     {{ csrf_field() }}
 
                     <div class="box-body">
+
                         <div class="form-group">
-                            <label>父级</label>
-                            <select class="form-control" name="parent_id">
-                                <option value="0">[ 顶级 ]</option>
+                            <label>分类</label>
+                            <select class="form-control" name="category_id">
                                 @foreach($categories as $item)
                                     <option value="{{ $item->id }}">{{ $item->getFullName() }}</option>
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="exampleInputEmail1">名称</label>
                             <input type="text" name="name" class="form-control" id="" placeholder="">
-                            <p class="help-block">请输入分类名称</p>
+                            <p class="help-block">请输入商品名称</p>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">排序</label>
                             <input type="text" name="sort" class="form-control" id=""
-                                   placeholder="Password">
+                                   placeholder="">
                             <p class="help-block">请输入整数，越小越靠前</p>
                         </div>
+
                         <div class="form-group">
                             <label>状态</label>
                             <div>
-                                {{--
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" id=""
-                                                   value="{{ \App\Category::STATUS_YES }}" checked="">
-                                            启用
-                                        </label>
-                                    </div>
-                                    <div class="radio-inline">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" id=""
-                                                   value="{{ \App\Category::STATUS_NO }}">
-                                            禁用
-                                        </label>
-                                    </div>
-                                --}}
-                                @foreach($category->statusAlias(true) as $key => $item)
+                                @foreach($product->statusAlias(true) as $key => $item)
                                     <div class="radio-inline">
                                         <label>
                                             <input type="radio" name="status" id=""
@@ -76,6 +62,15 @@
                                 @endforeach
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label>描述</label>
+                            <div>
+                               <textarea name="content" class="form-control" id="" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+
+
                     </div>
                     <!-- /.box-body -->
 

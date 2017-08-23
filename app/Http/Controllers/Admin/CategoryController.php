@@ -9,11 +9,25 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     //分类列表
-    public function index()
+    public function index(Request $request)
     {
         //所有的分类信息
         //分析，本项目分类信息，不会超过100条，所以不做分页
-        $categories = Category::orderByRaw('concat(path, id)')->get(); //orderBy会认为单引是一个列，而orderByRaw会认为单引是sql的一部分
+        //$categories = Category::orderByRaw('concat(path, id)')->get(); //orderBy会认为单引是一个列，而orderByRaw会认为单引是sql的一部分
+        $query = Category::orderByRaw('concat(path, id)');
+
+        //添加搜索条件
+        if ($request->get('name')) {
+            //name like '%电脑%'
+            $query->where('name', 'like', '%' . $request->get('name') . '%');
+        }
+        if ($request->get('status')) {
+            // status = ?
+            $query->where('status', '=', $request->get('status'));
+        }
+        //获取数据
+        $categories = $query->get();
+
         return view('admin.category.index')->with('categories', $categories);
     }
 
@@ -38,8 +52,17 @@ class CategoryController extends Controller
         ]);
     }
 
+
     public function doCreate(Request $request)
     {
+        //验证
+        $rules = [
+            'name' => 'required|max:20|min:2',
+            'sort' => 'required|integer',
+            'status' => 'required|integer',
+        ];
+        $this->validate($request, $rules);
+
         $data = $request->all();
         $parentId = $request->get('parent_id');
         if ($parentId == 0) {
@@ -66,6 +89,7 @@ class CategoryController extends Controller
 
     }
 
+    //删除分类
     public function delete(Request $request)
     {
         //1,2,4 或者 4
@@ -79,9 +103,11 @@ class CategoryController extends Controller
 
         $deleted = 0; //记录成功删除的数量
         foreach ($categories as $category) {
+            //判断是否允许删除
             if (!$category->allowDelete()) {
                 break; //只要有一条没删除，就跳出循环
             }
+            //执行删除操作，并记录成功删除的条数
             $deleted += $category->delete();
         }
         //判断是否全部删除成功
@@ -95,7 +121,46 @@ class CategoryController extends Controller
             $message = '删除失败';
         }
 
-        return redirect()->back()->with('message', $message); //是将这个消息放入的session中（一次性消息）
+        return redirect()->back()->with('message', $message); //是将这个消息放入的session中（一次性消息，和视图里面的session配套使用）
+
+    }
+
+    //显示分类编辑界面
+    public function update($id)
+    {
+        /*
+        $category = Category::find($id);
+        if ($category == null) {
+            abort(500, '指定ID不存在'.$id);
+        }
+        */
+        $category = Category::findOrFail($id);
+        return view('admin.category.update')->with('category', $category);
+    }
+
+    //保存修改
+    public function doUpdate($id, Request $request)
+    {
+
+        //验证
+        $rules = [
+            'name' => 'required|max:20|min:2',
+            'sort' => 'required|integer',
+            'status' => 'required|integer',
+        ];
+        $this->validate($request, $rules);
+
+        $category = Category::findOrFail($id);
+
+        $category->name = $request->get('name');
+        $category->sort = $request->get('sort');
+        $category->status = $request->get('status');
+
+        if ($category->save()) {
+            return redirect('admin/category')->with('message', '修改成功');
+        } else {
+            return back()->withInput()->with('message', '保存失败');
+        };
 
     }
 
