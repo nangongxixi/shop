@@ -26,8 +26,13 @@ class Category extends Model
         return array_key_exists($this->status, $map) ? $map[$this->status] : '';
     }
 
+    /*
+     * 返回完整名称 例如 电脑 > 电脑整机 > 笔记本
+     * @return string
+     */
     public function getFullName()
     {
+        //如果是顶级，则直接返回名称
         if ($this->path == '0,') {
             return $this->name;
         }
@@ -35,8 +40,37 @@ class Category extends Model
         $path = substr($this->path, 2); //1,2,
         $path = rtrim($path, ','); //1,2
         $ids = explode(',', $path); //[1,2]
-        $names = self::whereIn('id', $ids)->pluck('name')->toArray();//['电脑','电脑整机']
+
+        //select * from category where id in (1,2)
+
+        $names = self::whereIn('id', $ids)->orderBy('path')->pluck('name')->toArray();//['电脑','电脑整机']
+
+        // 电脑 > 电脑整机 > 笔记本
         return join(' > ', $names) . ' > ' . $this->name;
     }
+
+    /*
+     * 是否允许删除
+     *  @return bool
+     */
+    public function allowDelete()
+    {
+        // 1.有子分类不能删除
+        // select count(*) from category where parent_id=?
+        $count = self::where('parent_id', $this->id)->count();
+        if ($count > 0) {
+            return false;
+        }
+
+        // 2.有商品关联， 不能删除
+        // select count(*) from product where category_id=?
+        Product::where('category_id', $this->id)->count();
+        if ($count > 0) {
+            return false;
+        }
+        return true;
+
+    }
+
 
 }

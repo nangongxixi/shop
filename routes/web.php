@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     //执行修改保存数据库
     Route::post('/admin/category/update/{id}', 'Admin\\CategoryController@doUpdate')->where(['id' => '[0-9]+']);
     //删除分类
-    Route::post('/admin/category/delete/{id}', 'Admin\\CategoryController@delete')->where(['id' => '[0-9]+']);
+    Route::post('/admin/category/delete', 'Admin\\CategoryController@delete')->where(['id' => '[0-9]+']);
 
 });
 

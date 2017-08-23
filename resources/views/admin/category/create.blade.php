@@ -32,12 +32,13 @@
                         <div class="form-group">
                             <label>父级</label>
                             <select class="form-control" name="parent_id">
+                                <option value="0">[ 顶级 ]</option>
                                 @foreach($categories as $item)
                                     <option value="{{ $item->id }}">{{ $item->getFullName() }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group has-error">
+                        <div class="form-group">
                             <label for="exampleInputEmail1">名称</label>
                             <input type="text" name="name" class="form-control" id="" placeholder="">
                             <p class="help-block">请输入分类名称</p>
@@ -71,7 +72,7 @@
                                     <div class="radio-inline">
                                         <label>
                                             <input type="radio" name="status" id=""
-                                                   value="{{ $key }}" checked="">
+                                                   value="{{ $key }}">
                                             {{ $item }}
                                         </label>
                                     </div>
