@@ -1,4 +1,7 @@
 @extends('admin.layouts.master');
+
+<?php $leftMenuActive = 'admin/product'; ?>
+
 @section('content-wrapper')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -26,12 +29,12 @@
                                 <div class="col-md-3">
                                     <select name="status" class="form-control">
                                         <option value="">全部状态</option>
-                                        <option value="{{ \App\Category::STATUS_YES }}"
-                                                @if(request()->get('status')==\App\Category::STATUS_YES) selected @endif>
+                                        <option value="{{ \App\Product::STATUS_YES }}"
+                                                @if(request()->get('status')==\App\Product::STATUS_YES) selected @endif>
                                             启用
                                         </option>
                                         <option value="{{ \App\Category::STATUS_NO }}"
-                                                @if(request()->get('status')==\App\Category::STATUS_NO) selected @endif>
+                                                @if(request()->get('status')==\App\Product::STATUS_NO) selected @endif>
                                             禁用
                                         </option>
                                     </select>
@@ -60,10 +63,10 @@
                                     class="glyphicon glyphicon-plus"></span> 新增</a>
                         <a href="javascript:;" class="js-delete btn btn-danger btn-sm"><span
                                     class="glyphicon glyphicon-trash"></span> 删除</a>
-                        <form id="js-delete-form" action="{{ url('admin/product/delete') }}" method="post"
+                        <form id="js-delete-form" action="{{ url('admin/product/delete-batch') }}" method="post"
                               style="display:none ">
                             {{ csrf_field() }}
-                            <input type="text" name="id" value="">
+                            <input type="text" value="" name="id">
                         </form>
                     </div>
                     <!-- /.box-header -->
@@ -91,9 +94,14 @@
                                     <td>{{ $product->sort }}</td>
                                     <td>{{ $product->created_at }}</td>
                                     <td>
-                                        <a href="{{ url('admin/product/update',$product->id) }}">编辑</a>
-                                        <a data-id="{{ $product->id }}" class="js-delete-one"
-                                           href="javascript:;">删除</a>
+                                        <a href="{{ url('admin/product',[$product->id,'edit']) }}">编辑</a>
+                                        <a class="js-delete-one" href="javascript:;">删除</a>
+                                        <form class="js-delete-form-one"
+                                              action="{{ url('admin/product', $product->id) }}" method="post"
+                                              style="display:none ">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -102,6 +110,12 @@
                         </table>
                     </div>
                     <!-- /.box-body -->
+
+                    <div class="box-footer clearfix">
+                        {{ $products->links() }}
+                    </div>
+
+
                 </div>
             </div>
         </section>
@@ -115,16 +129,14 @@
         $(function () {
             //删除单条
             $(".js-delete-one").click(function () {
-                var id = $(this).attr("data-id");
+                //当前数据的删除表单
+                var deleteForm = $(this).siblings(".js-delete-form-one");
                 leaf.confirm("您确定要删除吗？", function () {
-                    //console.log(id);
-                    //把id填充到form表单中
-                    $("#js-delete-form").find("input[name='id']").val(id);
-                    //提交表单
-                    $("#js-delete-form").submit();
+                    deleteForm.submit();
                 });
             });
 
+            /*
             //多条删除
             $(".js-delete").click(function () {
 
@@ -147,7 +159,7 @@
                 });
 
             });
-
+             */
             //全选
             $(".js-select-all").click(function () {
                 //去自己的状态

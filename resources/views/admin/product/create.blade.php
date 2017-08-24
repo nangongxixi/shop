@@ -1,4 +1,7 @@
 @extends('admin.layouts.master')
+
+<?php $leftMenuActive = 'admin/product'; ?>
+
 @section('content-wrapper')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -27,7 +30,7 @@
 
                     <div class="box-body">
 
-                        <div class="form-group">
+                        <div class="form-group @if($errors->has('category_id')) has-error @endif">
                             <label>分类</label>
                             <select class="form-control" name="category_id">
                                 @foreach($categories as $item)
@@ -36,19 +39,25 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group @if($errors->has('name')) has-error @endif">
                             <label for="exampleInputEmail1">名称</label>
-                            <input type="text" name="name" class="form-control" id="" placeholder="">
+                            <input type="text" name="name" class="form-control" id="inputName" placeholder=""
+                                   value="{{ old('name', $product->name) }}">
                             <p class="help-block">请输入商品名称</p>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group @if($errors->has('price')) has-error @endif">
+                            <label for="exampleInputEmail1">单价</label>
+                            <input type="text" name="price" class="form-control" id="inputPrice" placeholder="">
+                            <p class="help-block">请输入商品单价</p>
+                        </div>
+                        <div class="form-group @if($errors->has('sort')) has-error @endif">
                             <label for="exampleInputPassword1">排序</label>
-                            <input type="text" name="sort" class="form-control" id=""
+                            <input type="text" name="sort" class="form-control" id="inputSort"
                                    placeholder="">
                             <p class="help-block">请输入整数，越小越靠前</p>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group @if($errors->has('status')) has-error @endif">
                             <label>状态</label>
                             <div>
                                 @foreach($product->statusAlias(true) as $key => $item)
@@ -63,10 +72,10 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group @if($errors->has('content')) has-error @endif">
                             <label>描述</label>
                             <div>
-                               <textarea name="content" class="form-control" id="" cols="30" rows="10"></textarea>
+                                <textarea name="content" class="form-control" id="" cols="30" rows="10"></textarea>
                             </div>
                         </div>
 

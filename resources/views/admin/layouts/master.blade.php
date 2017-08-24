@@ -213,11 +213,14 @@
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
                     <li class="header">主菜单</li>
-                    <li class="active"><a href="{{ url('admin') }}"><i class="fa fa-dashboard"></i> <span>仪表盘</span></a>
+                    <li class="@if(isset($leftMenuActive) && $leftMenuActive == 'admin')) active @endif"><a href="{{ url('admin') }}"><i class="fa fa-dashboard"></i> <span>仪表盘</span></a>
                     </li>
-                    <li><a href="{{ url('admin/category') }}"><i class="glyphicon glyphicon-tags"></i> <span>商品分类</span></a>
+                    <li class="@if(isset($leftMenuActive) && $leftMenuActive == 'admin/category')) active @endif"><a
+                                href="{{ url('admin/category') }}"><i class="glyphicon glyphicon-tags"></i>
+                            <span>商品分类</span></a>
                     </li>
-                    <li><a href="{{ url('admin/product') }}"><i class="glyphicon glyphicon-barcode"></i> <span>商品管理</span></a></li>
+                    <li class="@if(isset($leftMenuActive) && $leftMenuActive == 'admin/product')) active @endif"><a href="{{ url('admin/product') }}"><i class="glyphicon glyphicon-barcode"></i> <span>商品管理</span></a>
+                    </li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>

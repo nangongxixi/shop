@@ -1,4 +1,7 @@
 @extends('admin.layouts.master')
+
+<?php $leftMenuActive = 'admin/category'; ?>
+
 @section('content-wrapper')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
