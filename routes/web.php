@@ -11,9 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware'=>'browser.tag'],function(){
+    //首页
+    Route::get('/', 'HomeController@index');
+
+    //产品列表
+    Route::get('/product/{categoryId}', 'ProductController@index')->where('categoryId', '\d+');
+    Route::get('/product/detail/{productId}', 'ProductController@detail')->where('productId', '\d+');
+    Route::post('cart/add', 'CartController@add');
+    Route::get('cart/info', 'CartController@info');
+    Route::get('cart/index', 'CartController@index');
 });
+
 
 //后台登录相关功能
 Auth::routes();
@@ -38,12 +47,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/admin/category/delete', 'Admin\\CategoryController@delete')->where(['id' => '[0-9]+']);
 
     //商品管理
-    Route::resource('admin/product','Admin\\ProductController');
-
-    //前端首页
-    Route::get('/home','HomeController@index');
-
+    Route::resource('admin/product', 'Admin\\ProductController');
 
 });
-
-
