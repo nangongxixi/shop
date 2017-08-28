@@ -6,40 +6,42 @@
             <div class="col-xs-12 col-md-9 items-holder no-margin">
 
                 @foreach($carts as $cart)
-                <div class="row no-margin cart-item">
-                    <div class="col-xs-12 col-sm-2 no-margin">
-                        <a href="#" class="thumb-holder">
-                            <img class="lazy" alt="" src="{{ asset('static/frontend') }}/assets/images/products/product111.jpg" width="73" height="73">
-                        </a>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-5 ">
-                        <div class="title">
-                            <a href="{{ url('product/detail',$cart->product_id) }}">{{ $cart->product_name }}</a>
+                    <div class="row no-margin cart-item" data-cart-id="{{ $cart->product_id }}">
+                        <div class="col-xs-12 col-sm-2 no-margin">
+                            <a href="#" class="thumb-holder">
+                                <img class="lazy" alt=""
+                                     src="{{ asset('static/frontend') }}/assets/images/products/product111.jpg"
+                                     width="73" height="73">
+                            </a>
                         </div>
-                        <div class="brand">品牌</div>
-                    </div>
 
-                    <div class="col-xs-12 col-sm-3 no-margin">
-                        <div class="quantity">
-                            <div class="le-quantity">
-                                <form>
-                                    <a class="js-change-qty minus" href="#reduce"></a>
-                                    <input name="quantity" readonly="readonly" type="text" value="{{ $cart->qty }}">
-                                    <a class="js-change-qty plus" href="#add"></a>
-                                </form>
+                        <div class="col-xs-12 col-sm-5 ">
+                            <div class="title">
+                                <a href="{{ url('product/detail',$cart->product_id) }}">{{ $cart->product_name }}</a>
+                            </div>
+                            <div class="brand">品牌</div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-3 no-margin">
+                            <div class="quantity">
+                                <div class="le-quantity">
+                                    <form>
+                                        <a class="js-change-qty minus" href="#reduce"></a>
+                                        <input name="quantity" readonly="readonly" type="text" value="{{ $cart->qty }}">
+                                        <a class="js-change-qty plus" href="#add"></a>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-xs-12 col-sm-2 no-margin">
-                        <div class="price">
-                            ￥2000.00
+                        <div class="col-xs-12 col-sm-2 no-margin">
+                            <div class="price">
+                                ￥2000.00
+                            </div>
+                            <a class="close-btn" href="#"></a>
                         </div>
-                        <a class="close-btn" href="#"></a>
-                    </div>
-                </div><!-- /.cart-item -->
-               @endforeach
+                    </div><!-- /.cart-item -->
+                @endforeach
             </div>
             <!-- ========================================= CONTENT : END ========================================= -->
 
@@ -89,18 +91,39 @@
 
 @section('js')
     <script>
-        $(".js-change-qty").click(function(){
+        $(".js-change-qty").click(function () {
 
-            var currentQty= $(this).parent().find('input').val();
+            var currentQty = $(this).parent().find('input').val();
 
-            if( $(this).hasClass('minus') && currentQty>0){
+            if ($(this).hasClass('minus') && currentQty > 0) {
                 currentQty = parseInt(currentQty, 10) - 1;
-            }else{
-                if( $(this).hasClass('plus')){
+            } else {
+                if ($(this).hasClass('plus')) {
                     currentQty = parseInt(currentQty, 10) + 1;
                 }
             }
+
+            var cartId = $(this).parents("cart-item").attr("data-cart-id");
+
+            $.ajax({
+                url: "{{ url('cart/update') }}",
+                type: "POST",
+                data: {"cartId": cartId, "qty": currentQty},
+                dataType: "json",
+                success: function (res) {
+                    if (res.status) {
+                        alert(res.message);
+                    } else {
+                        alert(res.error);
+                    }
+                },
+                error: function () {
+                    alert('网络出错了');
+                }
+            });
+
+
             $(this).parent().parent().find('input').val(currentQty);
         });
     </script>
-    @endsection
+@endsection

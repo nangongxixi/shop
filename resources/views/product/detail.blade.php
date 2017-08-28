@@ -388,7 +388,7 @@
                         }
                     },
                     error: function () {
-                        alert('网络出错');
+                        alert('网络出错了');
                     }
                 });
             });
