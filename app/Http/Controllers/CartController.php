@@ -29,7 +29,7 @@ class CartController extends Controller
 
         //数据验证(只能整数，最大数量的提示, 是否存在商品id)
         $cart->qty = (int)$cart->qty;
-        $cart->qty = max(1, $cart->qty);
+        $cart->qty = max(1, $cart->qty);  //小于1就取1，大于1就去本身
 
         if ($cart->qty > 100) {
             return json_encode(['status' => false, 'error' => '数量不能超过100个']);
@@ -87,7 +87,7 @@ class CartController extends Controller
         $carts = Cart::where('browser_tag', $browserTag)->get();
         foreach ($carts as $cart) {
             $data['count'] += $cart->qty;
-            $data['money'] = $cart->qty * $cart->price;
+            $data['money'] += $cart->qty * $cart->price;
         }
         return $data;
 

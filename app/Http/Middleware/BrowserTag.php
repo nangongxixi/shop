@@ -18,7 +18,7 @@ class BrowserTag
         //$response = $next($request);
 
         $tag = \Cookie::get('browser_tag');
-
+        //cookie里面没有，我就给他放一个
         if(empty($tag)){
             $val = uniqid();
 
