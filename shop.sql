@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : mysql
+Source Server         : Laravel
 Source Server Version : 50717
 Source Host           : localhost:3306
 Source Database       : shop
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-08-28 17:14:17
+Date: 2017-08-29 22:12:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`id`),
   KEY `cart_browser_tag_index` (`browser_tag`),
   KEY `cart_member_id_index` (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of cart
@@ -41,6 +41,8 @@ CREATE TABLE `cart` (
 INSERT INTO `cart` VALUES ('9', '599fe4dac47df', '0', '14', 'accc', '555.00', '4', '', '2017-08-25 16:50:40', '2017-08-25 16:50:40');
 INSERT INTO `cart` VALUES ('10', '599fe4dac47df', '0', '15', '鼻尖部abc', '77.00', '3', '', '2017-08-28 10:45:14', '2017-08-28 10:45:14');
 INSERT INTO `cart` VALUES ('11', '59a38b87e7f40', '0', '15', '鼻尖部abc', '77.00', '3', '', '2017-08-28 11:18:35', '2017-08-28 11:18:35');
+INSERT INTO `cart` VALUES ('12', '59a24de7a86a2', '0', '15', '鼻尖部abc', '77.00', '8', '', '2017-08-29 16:02:37', '2017-08-29 20:29:14');
+INSERT INTO `cart` VALUES ('14', '59a24de7a86a2', '0', '14', 'accc', '555.00', '16', '', '2017-08-29 17:26:07', '2017-08-29 20:30:06');
 
 -- ----------------------------
 -- Table structure for `category`
@@ -76,6 +78,26 @@ INSERT INTO `category` VALUES ('18', '童装', '3', '0,3,', '1', '666', '2017-08
 INSERT INTO `category` VALUES ('20', '电脑整机测试', '2', '0,1,2,', '1', '666', '2017-08-25 10:11:29', '2017-08-25 10:11:29');
 
 -- ----------------------------
+-- Table structure for `member`
+-- ----------------------------
+DROP TABLE IF EXISTS `member`;
+CREATE TABLE `member` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `member_email_unique` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of member
+-- ----------------------------
+INSERT INTO `member` VALUES ('1', 'aa', 'aa@bb.cc', '$2y$10$5hRNj6tGie1NP3EpiVvmzO2jA0Rz9bXhM00UHkZi/AoYJOgBEn7MK', '2017-08-29 21:48:43', '2017-08-29 21:48:43');
+
+-- ----------------------------
 -- Table structure for `migrations`
 -- ----------------------------
 DROP TABLE IF EXISTS `migrations`;
@@ -84,7 +106,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of migrations
@@ -95,6 +117,7 @@ INSERT INTO `migrations` VALUES ('3', '2017_08_21_162000_create_categories_table
 INSERT INTO `migrations` VALUES ('4', '2017_08_21_162947_create_products_table', '1');
 INSERT INTO `migrations` VALUES ('5', '2017_08_21_163631_create_product_descriptions_table', '1');
 INSERT INTO `migrations` VALUES ('8', '2017_08_25_144450_create_carts_table', '2');
+INSERT INTO `migrations` VALUES ('9', '2017_08_29_204003_create_members_table', '3');
 
 -- ----------------------------
 -- Table structure for `password_reset`

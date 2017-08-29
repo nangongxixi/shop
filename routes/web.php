@@ -21,6 +21,13 @@ Route::group(['middleware'=>'browser.tag'],function(){
     Route::post('cart/add', 'CartController@add');
     Route::get('cart/info', 'CartController@info');
     Route::get('cart/index', 'CartController@index');
+    Route::post('cart/update', 'CartController@update');
+
+    //前台会员的登录
+    Route::any('member/register', 'AuthMember\\LoginController@register');//any 不限定请求方式，在控制里面用isMethod()去判断
+    Route::post('member/login', 'AuthMember\\LoginController@login');
+
+
 });
 
 

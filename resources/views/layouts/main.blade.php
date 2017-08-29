@@ -401,7 +401,10 @@
 </script>
 
 <script>
-    $(function(){
+
+    //获取并更新购物车信息显示
+    function updateCartInfo()
+    {
         $.ajax({
             url: "{{ url('cart/info') }}",
             type: "GET",
@@ -415,6 +418,11 @@
                 alert('网络出错');
             }
         });
+    }
+
+    $(function(){
+        //获取并更新购物车信息显示
+        updateCartInfo();
     });
 </script>
 

@@ -10,10 +10,12 @@ class CartController extends Controller
 {
 
     //购物车首页
-    public function index(){
-        $carts = Cart::all();
+    public function index()
+    {
+        $browserTag = \Cookie::get('browser_tag');
+        $carts = Cart::where('browser_tag', '=', $browserTag)->get();
         return view('cart.index')->with([
-            'carts'=>$carts,
+            'carts' => $carts,
         ]);
     }
 
@@ -47,19 +49,54 @@ class CartController extends Controller
         $cart->product_name = $product->name;
         $cart->price = $product->price;
 
-
-        if ($cart->save()) {
-            return ['status' => true, 'message' => '添加商品成功'];
+        // 判断当前商品id是否已经存在于购物车中，如果存在，则做更新数量操作
+        $cartProductInfo = Cart::where([
+            'browser_tag' => $cart->browser_tag,
+            'product_id'=>$cart->product_id,
+        ])->first();
+        if ($cartProductInfo) {
+            $cartProductInfo->qty += $request->get('qty');
+            if ($cartProductInfo->update()) {
+                return ['status' => true, 'message' => '添加商品成功'];
+            } else {
+                return ['status' => false, 'error' => '系统错误, 添加失败'];
+            }
         } else {
-            return ['status' => false, 'error' => '系统错误, 添加失败'];
+            if ($cart->save()) {
+                return ['status' => true, 'message' => '添加商品成功'];
+            } else {
+                return ['status' => false, 'error' => '系统错误, 添加失败'];
+            }
         }
-
 
     }
 
     //更新购物车中商品的数量
-    public function update()
+    public function update(Request $request)
     {
+
+        $cartId = $request->get('cartId');
+        $qty = $request->get('qty');
+
+        $browserTag = \Cookie::get('browser_tag');//浏览器标记
+
+        $cart = Cart::where([
+            ['product_id', $cartId], ['browser_tag', $browserTag]
+        ])->first();
+
+        if (empty($cart)) {
+            return ['status' => false,
+                'error' => '数据有误'];
+        }
+
+        $cart->qty = $qty;
+        if ($cart->save()) {
+            return ['status' => true, 'message' => '操作成功'];
+        } else {
+            return ['status' => false,
+                'error' => '操作失败'];
+        }
+
 
     }
 

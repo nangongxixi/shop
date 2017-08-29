@@ -1,4 +1,5 @@
 @extends('layouts.main')
+<?php $total=0; ?>
 @section('content')
     <section id="cart-page">
         <div class="container">
@@ -6,6 +7,7 @@
             <div class="col-xs-12 col-md-9 items-holder no-margin">
 
                 @foreach($carts as $cart)
+                    <?php $total += $cart->price * $cart->qty ?>
                     <div class="row no-margin cart-item" data-cart-id="{{ $cart->product_id }}">
                         <div class="col-xs-12 col-sm-2 no-margin">
                             <a href="#" class="thumb-holder">
@@ -36,7 +38,7 @@
 
                         <div class="col-xs-12 col-sm-2 no-margin">
                             <div class="price">
-                                ￥2000.00
+                                ￥{{ $cart->price }}
                             </div>
                             <a class="close-btn" href="#"></a>
                         </div>
@@ -54,14 +56,14 @@
                         <ul class="tabled-data no-border inverse-bold">
                             <li>
                                 <label>商品合计</label>
-                                <div class="value pull-right">￥8434.00</div>
+                                <div class="value pull-right js-cart-money">￥{{ $total }}</div>
                             </li>
 
                         </ul>
                         <ul id="total-price" class="tabled-data inverse-bold no-border">
                             <li>
                                 <label>总价</label>
-                                <div class="value pull-right">￥8434.00</div>
+                                <div class="value pull-right js-cart-money">￥{{ $total }}</div>
                             </li>
                         </ul>
                         <div class="buttons-holder">
@@ -95,7 +97,10 @@
 
             var currentQty = $(this).parent().find('input').val();
 
-            if ($(this).hasClass('minus') && currentQty > 0) {
+            if ($(this).hasClass('minus')) {
+                if(currentQty <= 1){
+                    return;
+                }
                 currentQty = parseInt(currentQty, 10) - 1;
             } else {
                 if ($(this).hasClass('plus')) {
@@ -103,7 +108,7 @@
                 }
             }
 
-            var cartId = $(this).parents("cart-item").attr("data-cart-id");
+            var cartId = $(this).parents(".cart-item").attr("data-cart-id");
 
             $.ajax({
                 url: "{{ url('cart/update') }}",
@@ -112,7 +117,8 @@
                 dataType: "json",
                 success: function (res) {
                     if (res.status) {
-                        alert(res.message);
+                       // alert(res.message);
+                        updateCartInfo();
                     } else {
                         alert(res.error);
                     }
