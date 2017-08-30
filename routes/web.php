@@ -24,10 +24,22 @@ Route::group(['middleware'=>'browser.tag'],function(){
     Route::post('cart/update', 'CartController@update');
 
     //前台会员的登录
-    Route::any('member/register', 'AuthMember\\LoginController@register');//any 不限定请求方式，在控制里面用isMethod()去判断
-    Route::post('member/login', 'AuthMember\\LoginController@login');
+    Route::any('member/login', 'AuthMember\\LoginController@login');//any 不限定请求方式，在控制里面用isMethod()去判断
+    Route::post('member/register', 'AuthMember\\LoginController@register');
+});
 
+Route::group(['middleware'=>'auth.member'],function(){
+    Route::get('member/profile', function(){
 
+        //取得当前登录用户信息
+        auth()->guard('member')->user();
+        //取得当前登录的会员名
+        auth()->guard('member')->user()->name;
+        //取得当前登录的会员
+        auth()->guard('member')->id();
+
+    });
+    Route::get('cart/index', 'CartController@index');
 });
 
 

@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'web', //默认的guard
         'passwords' => 'users',
     ],
 
@@ -36,11 +36,16 @@ return [
     */
 
     'guards' => [
+        //后台用户
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
+        //前台会员
+        'member' => [
+            'driver' => 'session',
+            'provider' => 'members',
+        ],
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
@@ -68,6 +73,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'members' => [
+            'driver' => 'eloquent',
+            'model' => App\Member::class,
         ],
 
         // 'users' => [

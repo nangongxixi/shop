@@ -25,7 +25,13 @@ class CartController extends Controller
         $cart = new Cart();
         $cart->fill($request->all());
 
-        $cart->member_id = 0; //会员id
+        if(auth()->guard('member')->check()){
+            $cart->member_id = auth()->guard('member')->id(); //会员id
+        }else{
+            $cart->member_id = 0;
+        }
+
+
         $cart->browser_tag = \Cookie::get('browser_tag'); //浏览器标记
 
 

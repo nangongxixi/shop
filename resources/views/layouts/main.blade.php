@@ -63,15 +63,20 @@
                 <div class="col-xs-12 col-sm-6 no-margin">
                     <ul class="right">
                         <li><a href="authentication.html">我的订单</a></li>
+                        @if(auth()->guard('member')->check())
                         <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#change-currency">当前用户名</a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#change-currency">
+                                {{auth()->guard('member')->user()->name}}
+                            </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">退出</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">个人中心</a></li>
+                                <li role="presentation"><a role="menuitem" href="{{ url('member/logout') }}" tabindex="-1" href="#">退出</a></li>
+                                <li role="presentation"><a role="menuitem" href="{{ url('member/profile') }}" tabindex="-1" href="#">个人中心</a></li>
                             </ul>
                         </li>
-                        <li><a href="authentication.html">注册</a></li>
-                        <li><a href="authentication.html">登录</a></li>
+                        @else
+                        <li><a href="{{ url('member/login') }}" >注册</a></li>
+                        <li><a href="{{ url('member/login') }}" >登录</a></li>
+                        @endif
                     </ul>
                 </div><!-- /.col -->
             </div><!-- /.container -->

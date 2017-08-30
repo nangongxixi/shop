@@ -22,15 +22,16 @@
                             </div>
                         </div>
 
-                        <form role="form" class="login-form cf-style-1">
+                        <form role="form" method="post" action="{{ url('member/login') }}" class="login-form cf-style-1">
+                            {{ csrf_field() }}
                             <div class="field-row">
                                 <label>邮箱</label>
-                                <input type="text" class="le-input">
+                                <input type="text" name="email" class="le-input">
                             </div><!-- /.field-row -->
 
                             <div class="field-row">
                                 <label>密码</label>
-                                <input type="text" class="le-input">
+                                <input type="password" name="password" class="le-input">
                             </div><!-- /.field-row -->
 
                             <div class="field-row clearfix">

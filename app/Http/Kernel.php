@@ -58,7 +58,8 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
 
-        'browser.tag' => \App\Http\Middleware\BrowserTag::class
+        'browser.tag' => \App\Http\Middleware\BrowserTag::class,
+         'auth.member' => \App\Http\Middleware\AuthMember::class
 
     ];
 }

@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Laravel
+Source Server         : mysql
 Source Server Version : 50717
 Source Host           : localhost:3306
 Source Database       : shop
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-08-29 22:12:11
+Date: 2017-08-30 13:59:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,16 +33,14 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`id`),
   KEY `cart_browser_tag_index` (`browser_tag`),
   KEY `cart_member_id_index` (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES ('9', '599fe4dac47df', '0', '14', 'accc', '555.00', '4', '', '2017-08-25 16:50:40', '2017-08-25 16:50:40');
-INSERT INTO `cart` VALUES ('10', '599fe4dac47df', '0', '15', '鼻尖部abc', '77.00', '3', '', '2017-08-28 10:45:14', '2017-08-28 10:45:14');
-INSERT INTO `cart` VALUES ('11', '59a38b87e7f40', '0', '15', '鼻尖部abc', '77.00', '3', '', '2017-08-28 11:18:35', '2017-08-28 11:18:35');
-INSERT INTO `cart` VALUES ('12', '59a24de7a86a2', '0', '15', '鼻尖部abc', '77.00', '8', '', '2017-08-29 16:02:37', '2017-08-29 20:29:14');
-INSERT INTO `cart` VALUES ('14', '59a24de7a86a2', '0', '14', 'accc', '555.00', '16', '', '2017-08-29 17:26:07', '2017-08-29 20:30:06');
+INSERT INTO `cart` VALUES ('16', '59a62ede33d01', '1', '15', '鼻尖部abc', '77.00', '2', '', '2017-08-30 11:43:44', '2017-08-30 11:43:44');
+INSERT INTO `cart` VALUES ('17', '59a6349209b2a', '4', '15', '鼻尖部abc', '77.00', '8', '', '2017-08-30 11:44:42', '2017-08-30 11:44:42');
+INSERT INTO `cart` VALUES ('18', '59a634cc284b7', '1', '15', '鼻尖部abc', '77.00', '3', '', '2017-08-30 11:46:17', '2017-08-30 11:46:17');
 
 -- ----------------------------
 -- Table structure for `category`
@@ -90,12 +88,14 @@ CREATE TABLE `member` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `member_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of member
 -- ----------------------------
 INSERT INTO `member` VALUES ('1', 'aa', 'aa@bb.cc', '$2y$10$5hRNj6tGie1NP3EpiVvmzO2jA0Rz9bXhM00UHkZi/AoYJOgBEn7MK', '2017-08-29 21:48:43', '2017-08-29 21:48:43');
+INSERT INTO `member` VALUES ('3', 'wangwu', 'wangwu@qq.com', '$2y$10$Tq5.fQE.t6yFBimXNdbCrud72xBnpwDcOck7gPKFSP4Xtlp3UEVBK', '2017-08-30 10:39:15', '2017-08-30 10:39:15');
+INSERT INTO `member` VALUES ('4', 'cc', 'cc@bb.cc', '$2y$10$93JMOmAtaYAu6uzHbHcN1OGBl9K7KonZB3RrlYXzSHOtTVSu.0.TC', '2017-08-30 10:43:02', '2017-08-30 10:43:02');
 
 -- ----------------------------
 -- Table structure for `migrations`
