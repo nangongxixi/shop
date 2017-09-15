@@ -77,4 +77,8 @@ Route::group(['middleware' => 'auth'], function () {
     //商品管理
     Route::resource('admin/product', 'Admin\\ProductController');
 
+    //单页管理
+    Route::resource('admin/page', 'Admin\\PageController');
+
+
 });

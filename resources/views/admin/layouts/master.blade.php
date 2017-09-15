@@ -224,12 +224,16 @@
                                 href="{{ url('admin/product') }}"><i class="glyphicon glyphicon-barcode"></i>
                             <span>商品管理</span></a>
                     </li>
+                    <li class="@if(isset($leftMenuActive) && $leftMenuActive == 'admin/page')) active @endif"><a
+                                href="{{ url('admin/page') }}"><i class="glyphicon glyphicon-folder-open"></i>
+                            <span>单页管理</span></a>
+                    </li>
                     <li class="@if(isset($leftMenuActive) && $leftMenuActive == 'admin/order')) active @endif"><a
-                                href="{{ url('admin/order') }}"><i class="glyphicon glyphicon-barcode"></i>
+                                href="{{ url('admin/order') }}"><i class="glyphicon glyphicon-file"></i>
                             <span>订单管理</span></a>
                     </li>
                     <li class="@if(isset($leftMenuActive) && $leftMenuActive == 'admin/member')) active @endif"><a
-                                href="{{ url('admin/member') }}"><i class="glyphicon glyphicon-barcode"></i>
+                                href="{{ url('admin/member') }}"><i class="glyphicon glyphicon-user"></i>
                             <span>会员管理</span></a>
                     </li>
                 </ul>
