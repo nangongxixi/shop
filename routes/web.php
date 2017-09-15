@@ -29,8 +29,16 @@ Route::group(['middleware'=>'browser.tag'],function(){
 });
 
 Route::group(['middleware'=>'auth.member'],function(){
-    Route::get('member/profile', function(){
 
+    //下单页面
+    Route::get('/order/checkout','OrderController@checkout');
+    Route::post('/order/create','OrderController@create');
+
+    //通过父级地区的Id，返回该级别的下级地区
+    Route::get('/region/search','RegionController@search');
+    Route::get('/region/district','RegionController@district');
+
+    Route::get('member/profile', function(){
         //取得当前登录用户信息
         auth()->guard('member')->user();
         //取得当前登录的会员名
@@ -45,6 +53,7 @@ Route::group(['middleware'=>'auth.member'],function(){
 
 //后台登录相关功能
 Auth::routes();
+
 
 //后台路由组
 Route::group(['middleware' => 'auth'], function () {

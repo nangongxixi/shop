@@ -67,7 +67,7 @@
                             </li>
                         </ul>
                         <div class="buttons-holder">
-                            <a class="le-button big" href="checkout.html">去结算</a>
+                            <a class="le-button big" href="../order/checkout">去结算</a>
                             <a class="simple-link block" href="index.html">继续选购</a>
                         </div>
                     </div>

@@ -12,6 +12,6 @@ class Cart extends Model
 {
     protected $table='cart';
 
-    protected  $fillable = ['product_id','qty','attribute'];
+   // protected  $fillable = ['product_id','qty','attribute'];
 
 }
