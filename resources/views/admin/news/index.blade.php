@@ -8,12 +8,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                单页管理
-                <small>单页列表</small>
+                新闻管理
+                <small>新闻列表</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="{{ url('admin/page') }}"><i class="fa fa-dashboard"></i> 首页</a></li>
-                <li class="active">单页管理</li>
+                <li><a href="{{ url('admin/news') }}"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li class="active">新闻管理</li>
             </ol>
         </section>
         <!-- Main content -->
@@ -24,7 +24,7 @@
 
                 <div class="box">
                     <div class="box-header">
-                        <a href="{{ url('admin/page/create') }}" class="btn btn-primary btn-sm"><span
+                        <a href="{{ url('admin/news/create') }}" class="btn btn-primary btn-sm"><span
                                     class="glyphicon glyphicon-plus"></span> 新增</a>
                         <a href="javascript:;" class="js-delete btn btn-danger btn-sm"><span
                                     class="glyphicon glyphicon-trash"></span> 删除</a>
@@ -46,7 +46,7 @@
                                 <th>操作</th>
                             </tr>
 
-                            @foreach($pages as $page)
+                            @foreach($newsList as $page)
                                 <tr>
                                     <th><input type="checkbox" class="ids" value="{{ $page->id }}"></th>
                                     <td>{{ $page->id }}</td>

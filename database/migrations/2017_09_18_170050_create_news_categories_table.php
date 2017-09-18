@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagesTable extends Migration
+class CreateNewsCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('page', function (Blueprint $table) {
+        Schema::create('news_category', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string("title")->comment("页面标题");
-            $table->string("description")->comment("描述");
-            $table->string("content")->comment("页面内容");
+            $table->string('name')->comment('名称：1.公司新闻 2.行业新闻');
             $table->string("coverPic")->comment("封面图");
+            $table->string('sort')->comment('排序');
+            $table->integer('status')->comment('状态：1.显示 2.不显示');
+            $table->string('description')->comment('描述');
 
             $table->timestamps();
         });
@@ -32,6 +33,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('page');
+        Schema::dropIfExists('news_category');
     }
 }

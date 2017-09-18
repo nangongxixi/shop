@@ -142,6 +142,8 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+
+
         if($product->delete()){
             ProductDescription::where('product_id', $id)->delete();
             return redirect('admin/product')->with('message','删除成功');

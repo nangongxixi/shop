@@ -228,6 +228,10 @@
                                 href="{{ url('admin/page') }}"><i class="glyphicon glyphicon-folder-open"></i>
                             <span>单页管理</span></a>
                     </li>
+                    <li class="@if(isset($leftMenuActive) && $leftMenuActive == 'admin/news')) active @endif"><a
+                                href="{{ url('admin/news') }}"><i class="glyphicon glyphicon-list-alt"></i>
+                            <span>新闻管理</span></a>
+                    </li>
                     <li class="@if(isset($leftMenuActive) && $leftMenuActive == 'admin/order')) active @endif"><a
                                 href="{{ url('admin/order') }}"><i class="glyphicon glyphicon-file"></i>
                             <span>订单管理</span></a>

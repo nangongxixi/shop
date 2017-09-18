@@ -27,22 +27,23 @@
                 <form action="" method="post">
 
                     {{ csrf_field() }}
+                    <input type="hidden" name="id" value="{{ $page->id }}">
 
                     <div class="box-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">标题</label>
-                            <input type="text" name="title" class="form-control" id="" placeholder="">
+                            <input type="text" name="title" class="form-control" id="" placeholder="" value="{{ $page->title }}" >
                             <p class="help-block">请输入标题</p>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">描述</label>
-                            <textarea name="description" class="form-control" rows="3" placeholder=""></textarea>
+                            <textarea name="description" class="form-control" rows="3" placeholder="">{{ $page->description }}</textarea>
                             <p class="help-block">请输入描述</p>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">内容</label>
                             <form>
-                                <textarea id="nangongxixiEditor" name="content" rows="10" cols="80"></textarea>
+                                <textarea id="nangongxixiEditor" name="content" rows="10" cols="80">{{ $page->content }}</textarea>
                             </form>
                             <p class="help-block">请输入内容</p>
                         </div>
@@ -73,6 +74,7 @@
                 var content = $.trim(editor.document.getBody().getHtml());//获取富文本编辑框的值
                 var description =  $.trim($("textarea[name='description']").val());
                 var token = $("input[name='_token']").val();
+                var id = $("input[name='id']").val();
 
                 if(title.length<1){
                     $("input[name='title']").parent().addClass("has-error");
@@ -86,20 +88,19 @@
                 $.ajax({
                     url: "{{ url('admin/page') }}",
                     type: "POST",
-                    data: {"title": title, "content": content, "coverPic": 666, "_token": token,"description":description},
+                    data: {"title": title, "content": content, "coverPic": 666, "_token": token, "id":parseInt(id),"description":description},
                     dataType: "json",
                     success: function (res) {
                         if (res.status) {
                             leaf.toast(res.message, '',function(){
                                 window.location = "{{ url('admin/page') }}";
                             });
-
                         } else {
-                            alert(res.message);
+                            leaf.toast(res.message);
                         }
                     },
                     error: function () {
-                        //alert('网络出错了');
+                        alert('网络出错了');
                     }
                 });
             });

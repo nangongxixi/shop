@@ -80,5 +80,8 @@ Route::group(['middleware' => 'auth'], function () {
     //单页管理
     Route::resource('admin/page', 'Admin\\PageController');
 
+    //新闻管理
+    Route::resource('admin/news', 'Admin\\NewsController');
+
 
 });
