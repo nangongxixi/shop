@@ -13,6 +13,8 @@ class ProductController extends Controller
      */
     public function index($categoryId)
     {
+
+
         //当前传递id对应的数据
         $category = Category::find($categoryId);
 

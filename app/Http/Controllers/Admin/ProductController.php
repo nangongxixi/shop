@@ -46,6 +46,7 @@ class ProductController extends Controller
             ->where('status', '=', Category::STATUS_YES)
             ->get();
         $product = new Product();
+
         return view('admin.product.create')->with([
             'categories' => $categories,
             'product' => $product,
@@ -96,7 +97,6 @@ class ProductController extends Controller
         $product->description()->save($description);
 
         return redirect('admin/product')->with('message', '添加商品成功');
-
     }
 
     /**

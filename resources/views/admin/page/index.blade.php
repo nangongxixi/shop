@@ -30,7 +30,7 @@
                                     class="glyphicon glyphicon-trash"></span> 删除</a>
                         <form id="js-delete-form" action="" method="POST">
                             {{ csrf_field() }}
-                            <input type="hidden" name="_method" value="DELETE">
+                            {{ method_field('DELETE') }}
                         </form>
                     </div>
                     <!-- /.box-header -->
@@ -86,6 +86,14 @@
                 $("#js-delete-form").submit();
             });
         })
+
+        //全选
+        $(".js-select-all").click(function () {
+            //去自己的状态
+            var status = $(this).prop('checked');
+            //将下面的checkbox置为选中状态或非选中状态
+            $(this).parent().closest(".table").find(".ids").prop("checked", status);
+        });
 
         //多条删除
         $(document).on("click", ".js-delete", function () {
